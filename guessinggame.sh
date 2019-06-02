@@ -1,40 +1,31 @@
 #!/usr/bin/env bash
-#File: guessinggame.sh
+#File: guessingame.sh
 
-function guessinggame{
+numfiles=0
 
-files=$(ls -R | wc -l)
+function guess()
+{
+    FILE_CNT=`ls | wc -l`
+    read -p "How many files are in the current directory > " INPUT
+    if [ -z $INPUT ]
+    then
+        return
+    fi
 
-guessings=0
+    if [ $INPUT -eq $FILE_CNT ]
+    then
+        echo "Congratulations,your answer is correct. "
+        numfiles=1
+    elif [ $INPUT -lt $FILE_CNT ]
+    then
+        echo "Your answer is too low. "
+    else
+        echo "Your answer is too high. "
+    fi
+}
 
-while [[ guessing -eq 0 ]]
+while [ $numfiles -ne 1 ]
 do
+    guess
+done
 
-            echo "Hey, dear user, enter the number of files that exists in current directorium: "
-            read guess
-            
-            if [[ $guess =~ ^[0-9]+$ ]]
-                        then
-                             if [[ $guess -eq $files ]]
-                             then
-                                    echo "Yes!You have entered the correct number of files"
-                                    guess=1
-                             elif [[ $guess -gt $files ]]
-                                    then
-                                    echo "The number of files you'have entered is $guess . That number of files is too big."
-                                    echo ""
-                              else
-                              
-                                    echo "The number of files you have entered is $guess . That number of files is too small."
-                                    echo ""
-                              fi
-                              
-                              
-                          else
-                          
-                                    echo "Make sure you've entered a number that describes how many files exists in current directorium. "
-                          fi
-                          
-              done
-              
-  }
